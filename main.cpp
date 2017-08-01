@@ -13,25 +13,25 @@
 #define	BMP180_COMMAND_PRESSURE3 0xF4
 
 int main(int argc, char* argv[]) {
-    int error = wiringPiI2CSetup(BMP180_ADDR);
-    if(!error) {
+    int fd = wiringPiI2CSetup(BMP180_ADDR);
+    if(error == -1) {
         std::cout << "[E]: Problem in I2C setup." << std::endl;
         return -1;
     }
     int data[2], result;
 
-    error = wiringPiI2CWrite(BMP180_ADDR, BMP180_REG_CONTROL);
-    if(!error) {
+    error = wiringPiI2CWrite(fd, BMP180_REG_CONTROL);
+    if(error == -1) {
         std::cout << "[E]: Problem in writing." << std::endl;
         return -1;
     }
 
-    error = wiringPiI2CWrite(BMP180_ADDR, BMP180_COMMAND_TEMPERATURE);
-    if(!error) {
+    error = wiringPiI2CWrite(fd, BMP180_COMMAND_TEMPERATURE);
+    if(error == -1) {
         std::cout << "[E]: Problem in writing." << std::endl;
         return -1;
     }
 
-    int temperature = wiringPiI2CReadReg8(BMP180_ADDR, BMP180_REG_RESULT);
+    int temperature = wiringPiI2CReadReg8(fd, BMP180_REG_RESULT);
     std::cout << "Temperature: " << temperature << std::endl;
 }
