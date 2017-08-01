@@ -20,10 +20,13 @@ int main(int argc, char* argv[]) {
     }
     int data[2], result;
 
-    data[0] = BMP180_REG_CONTROL;
-    data[1] = BMP180_COMMAND_TEMPERATURE;
+    error = wiringPiI2CWrite(BMP180_ADDR, BMP180_REG_CONTROL);
+    if(!error) {
+        std::cout << "[E]: Problem in writing." << std::endl;
+        return -1;
+    }
 
-    error = wiringPiI2CWrite(BMP180_ADDR, data);
+    error = wiringPiI2CWrite(BMP180_ADDR, BMP180_COMMAND_TEMPERATURE);
     if(!error) {
         std::cout << "[E]: Problem in writing." << std::endl;
         return -1;
