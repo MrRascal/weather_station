@@ -13,12 +13,12 @@
 #define	BMP180_COMMAND_PRESSURE3 0xF4
 
 int main(int argc, char* argv[]) {
-    char error = wiringPiI2CSetup(BMP180_ADDR);
+    int error = wiringPiI2CSetup(BMP180_ADDR);
     if(!error) {
         std::cout << "[E]: Problem in I2C setup." << std::endl;
         return -1;
     }
-    unsigned char data[2], result;
+    int data[2], result;
 
     data[0] = BMP180_REG_CONTROL;
     data[1] = BMP180_COMMAND_TEMPERATURE;
@@ -29,6 +29,6 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    char temperature = wiringPiI2CReadReg8(BMP180_ADDR, BMP180_REG_RESULT);
+    int temperature = wiringPiI2CReadReg8(BMP180_ADDR, BMP180_REG_RESULT);
     std::cout << "Temperature: " << temperature << std::endl;
 }
