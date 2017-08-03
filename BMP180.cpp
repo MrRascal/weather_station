@@ -6,6 +6,8 @@
 #include "BMP180.h"
 #include "common.h"
 
+BMP180::BMP180() {};
+
 void BMP180::Begin() {
     if(wiringPiSetup() < 0) {
         ERROR_LOG('Problem with setting up wiringPi');
