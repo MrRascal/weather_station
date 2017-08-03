@@ -26,22 +26,22 @@ void BMP180::Begin() {
     MD  = ReadS16(BMP180_CAL_MD);
 }
 
-unsigned short ReadU16(int reg) {
+unsigned short BMP180::ReadU16(int reg) {
     int msb, lsb;
-    msb = wiringPiI2CReadReg8(reg);
-    lsb = wiringPiI2CReadReg8(reg+1);
+    msb = wiringPiI2CReadReg8(fd_, reg);
+    lsb = wiringPiI2CReadReg8(fd_, reg+1);
     int result = (msb << 8) + lsb;
     return (unsigned short) result;
 }
 
-short ReadS16(int reg) {
+short BMP180::ReadS16(int reg) {
     int result;
     result = ReadU16(reg);
     if (result > 32767)result -= 65536;
     return (short) result;
 }
 
-float GetTemperature() {
+float BMP180::GetTemperature() {
     float temperature;
     int UT, X1, X2, B5;
 
