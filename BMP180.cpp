@@ -28,8 +28,8 @@ void BMP180::Begin() {
 
 unsigned short ReadU16(int reg) {
     int msb, lsb;
-    msb = wiringPiI2CReadReg8(fd_, reg);
-    lsb = wiringPiI2CReadReg8(fd_ , reg+1);
+    msb = wiringPiI2CReadReg8(reg);
+    lsb = wiringPiI2CReadReg8(reg+1);
     int result = (msb << 8) + lsb;
     return (unsigned short) result;
 }
@@ -45,14 +45,14 @@ float GetTemperature() {
     float temperature;
     int UT, X1, X2, B5;
 
-    wiringPiI2CWriteReg8(fd_ , BMP180_CONTROL, BMP180_READTEMPCMD);
+    wiringPiI2CWriteReg8(fd_, BMP180_CONTROL, BMP180_READTEMPCMD);
     delay(5);
     UT = (wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA)  << 8) + wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA + 1);
 
     X1 = ((UT - AC6) * AC5) >> 15;
     X2 = (MC << 11) / (X1 + MD);
     B5 = X1 + X2;
-    T = ((B5 + 8) >> 4) / 10.0;
+    temperature = ((B5 + 8) >> 4) / 10.0;
 
     return temperature;
 }
