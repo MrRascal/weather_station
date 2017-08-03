@@ -100,11 +100,11 @@ int BMP180::GetPressure() {
     X3 = ((X1 + X2) + 2) >> 2;
     B4 = (AC4 * (X3 + 32768)) >> 15;
     B7 = (UP - B3) * (50000 >> OSS);
-    if (B7 < 0x80000000){P = (B7 * 2) / B4;}
-    else {P = (B7 / B4) * 2;}
-    X1 = (P >> 8) * (P >> 8);
+    if (B7 < 0x80000000){pressure = (B7 * 2) / B4;}
+    else {pressure = (B7 / B4) * 2;}
+    X1 = (pressure >> 8) * (pressure >> 8);
     X1 = (X1 * 3038) >> 16;
-    X2 = (-7357 * P) >> 16;
+    X2 = (-7357 * pressure) >> 16;
     pressure = pressure + ((X1 + X2 + 3791) >> 4);
     return pressure;
 }
