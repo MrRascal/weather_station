@@ -56,3 +56,55 @@ float BMP180::GetTemperature() {
 
     return temperature;
 }
+
+int BMP180::GetPressure() {
+    int pressure;
+    int UT,UP,X1,X2,X3,B3,B5,B6;
+    unsigned int B4;
+    int B7;
+
+    wiringPiI2CWriteReg8(fd_, BMP180_CONTROL, BMP180_READTEMPCMD);
+    delay(5);
+    UT = (wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA)  << 8) + wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA + 1);
+
+    int MSB,LSB,XLSB,raw;
+    I2C_writeByte(BMP180_CONTROL,BMP180_READPRESSURECMD +(OSS << 6));
+    switch(OSS)
+    {
+        case BMP180_ULTRALOWPOWER:
+            delay(5);break;
+        case BMP180_HIGHRES:
+            delay(14);break;
+        case BMP180_ULTRAHIGHRES:
+            delay(26);break;
+        default :
+            delay(8);
+    }
+    MSB  = wiringPiI2CReadReg8(fd_, BMP180_PRESSUREDATA);
+    LSB  = wiringPiI2CReadReg8(fd_, BMP180_PRESSUREDATA + 1);
+    XLSB = wiringPiI2CReadReg8(fd_, BMP180_PRESSUREDATA + 2);
+    UP = ((MSB << 16) + (LSB << 8) + XLSB) >> (8 - OSS);
+
+    X1 = ((UT - AC6)*AC5) >> 15;
+    X2 = (MC << 11) / (X1 + MD);
+    B5 = X1 + X2;
+
+    //Pressure Calculations
+    B6 = B5 - 4000;
+    X1 = (B2 * (B6 * B6) >> 12) >> 11;
+    X2 = (AC2 * B6) >> 11;
+    X3 = X1 + X2;
+    B3 = (((AC1 * 4 + X3) << OSS) + 2) / 4;
+    X1 = (AC3 * B6) >> 13;
+    X2 = (B1 * ((B6 * B6) >> 12)) >> 16;
+    X3 = ((X1 + X2) + 2) >> 2;
+    B4 = (AC4 * (X3 + 32768)) >> 15;
+    B7 = (UP - B3) * (50000 >> OSS);
+    if (B7 < 0x80000000){P = (B7 * 2) / B4;}
+    else {P = (B7 / B4) * 2;}
+    X1 = (P >> 8) * (P >> 8);
+    X1 = (X1 * 3038) >> 16;
+    X2 = (-7357 * P) >> 16;
+    pressure = pressure + ((X1 + X2 + 3791) >> 4);
+    return pressure;
+}

@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
 
     while(1) {
         printf("Temperature: %.2f C\n", station.GetTemperature());
+        printf("Pressure:    %.2f Pa\n\n"), station.GetPressure();
         delay(1000);
     }
 }

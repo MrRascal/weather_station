@@ -43,6 +43,8 @@ public:
 
     float GetTemperature();
 
+    int GetPressure();
+
 private:
 
     unsigned short ReadU16(int reg);
