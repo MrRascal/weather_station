@@ -7,8 +7,8 @@
 #include "BMP180.h"
 
 int main(int argc, char* argv[]) {
-    printf("Welcome to the weather station!");
-    printf("--------------------------------------------");
+    printf("Welcome to the weather station!\n");
+    printf("--------------------------------------------\n");
     BMP180 station;
     station.Begin();
 
