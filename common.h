@@ -1,3 +1,4 @@
+#include <stdio.h>
 #define ERROR_LOG(...)                                                  \
     do{                                                                  \
         fprintf(stderr, "[E]:%s:%d ", __FILE__, __LINE__);                                         \
