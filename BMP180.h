@@ -50,8 +50,8 @@ private:
     short ReadS16(int reg);
 
     int fd_;
-    short AC1,AC2,AC3,B1,B2,MB,MC,MD;
-    unsigned short AC4,AC5,AC6;
+    short AC1, AC2, AC3, B1, B2, MB, MC, MD;
+    unsigned short AC4, AC5, AC6;
 };
 
 #endif //WEATHER_STATION_BMP180_H

@@ -1,7 +1,7 @@
 //
 // Created by Nathan Levigne on 8/2/17.
 //
-
+#include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "BMP180.h"
 #include "common.h"
