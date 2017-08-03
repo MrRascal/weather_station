@@ -67,8 +67,8 @@ int BMP180::GetPressure() {
     delay(5);
     UT = (wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA)  << 8) + wiringPiI2CReadReg8(fd_ , BMP180_TEMPDATA + 1);
 
-    int MSB,LSB,XLSB,raw;
-    I2C_writeByte(BMP180_CONTROL,BMP180_READPRESSURECMD +(OSS << 6));
+    int MSB,LSB,XLSB;
+    wiringPiI2CWriteReg8(fd_, BMP180_CONTROL, BMP180_READPRESSURECMD +(OSS << 6));
     switch(OSS)
     {
         case BMP180_ULTRALOWPOWER:
