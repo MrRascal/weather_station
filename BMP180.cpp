@@ -10,7 +10,7 @@ BMP180::BMP180() {};
 
 void BMP180::Begin() {
     if(wiringPiSetup() < 0) {
-        ERROR_LOG('Problem with setting up wiringPi');
+        ERROR_LOG("Problem with setting up wiringPi");
     }
     fd_ = wiringPiI2CSetup(BMP180_Address);
     AC1 = ReadS16(BMP180_CAL_AC1);
@@ -36,7 +36,7 @@ unsigned short ReadU16(int reg) {
 
 short ReadS16(int reg) {
     int result;
-    result = ReadU16(reg, BMP180_TEMPDATA);
+    result = ReadU16(reg);
     if (result > 32767)result -= 65536;
     return (short) result;
 }
