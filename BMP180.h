@@ -1,7 +1,3 @@
-//
-// Created by Nathan Levigne on 8/2/17.
-//
-
 #ifndef BMP180_H
 #define BMP180_H
 
@@ -33,27 +29,28 @@
 //Commands
 #define BMP180_READTEMPCMD      0x2E
 #define BMP180_READPRESSURECMD  0x34
-#define OSS BMP180_STANDARD
 
 class BMP180 {
 public:
+    // Public functions
     BMP180();
 
-    void Begin();
+    void Begin(unsigned short int pressure_mode);
 
     float GetTemperature();
 
     int GetPressure();
 
 private:
-
+    // Private functions
     unsigned short ReadU16(int reg);
 
     short ReadS16(int reg);
 
+    // Private Variables
     int fd_;
     short AC1, AC2, AC3, B1, B2, MB, MC, MD;
-    unsigned short AC4, AC5, AC6;
+    unsigned short AC4, AC5, AC6, mode_;
 };
 
-#endif //WEATHER_STATION_BMP180_H
+#endif
