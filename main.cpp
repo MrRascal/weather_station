@@ -40,8 +40,8 @@ int main(int argc, char* argv[]) {
     int pressure;
 
     // Initialize signal handlers
-    signal(SIGINT, SignalHandler);
-    signal(SIGTERM, SignalHandler);
+    std::signal(SIGINT, SignalHandler);
+    std::signal(SIGTERM, SignalHandler);
 
     printf("Welcome to the weather station!\n");
     printf("--------------------------------------------\n");

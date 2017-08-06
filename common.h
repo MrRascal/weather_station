@@ -5,7 +5,7 @@
         fprintf(stderr, "[E]:%s:%d ", __FILE__, __LINE__);              \
         fprintf(stderr, __VA_ARGS__);                                   \
         fprintf(stderr, ":Exiting... \n");                              \
-        raise(SIGTERM);                                                 \
+        std::raise(SIGTERM);                                                 \
     } while(0)
 
 #define ERROR_LOG(...)                                                  \
