@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string>
 #include <sstream>
-#include <ofstream>
+#include <fstream>
 #include <iostream>
 #include <time.h>
 #include <chrono>
@@ -18,8 +18,8 @@
 namespace {
     volatile bool stop_signal_caught = false;
 
-    void SignalHandler(int signunm) {
-        if(signunm == SIGINT || signum == SIGTERM) {
+    void SignalHandler(int signum) {
+        if(signum == SIGINT || signum == SIGTERM) {
             stop_signal_caught = true;
         }
     }
@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 
     // Initialize BMP180 for recording
     BMP180 station;
-    station.Begin();
+    station.Begin(1);
 
     // Constantly read and write to file
     while(!stop_signal_caught) {
