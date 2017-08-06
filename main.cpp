@@ -11,6 +11,7 @@
 #include <iostream>
 #include <time.h>
 #include <chrono>
+#include <signal.h>
 
 #include "common.h"
 #include "BMP180.h"
@@ -40,8 +41,8 @@ int main(int argc, char* argv[]) {
     int pressure;
 
     // Initialize signal handlers
-    std::signal(SIGINT, SignalHandler);
-    std::signal(SIGTERM, SignalHandler);
+    signal(SIGINT, SignalHandler);
+    signal(SIGTERM, SignalHandler);
 
     printf("Welcome to the weather station!\n");
     printf("--------------------------------------------\n");
