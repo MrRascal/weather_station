@@ -18,6 +18,6 @@
 #define INFO_LOG(...)                                                   \
     do{                                                                 \
         fprintf(stderr, "[I]: ");                                       \
-        fprintf(stderr, __VA_ARGS__);                                  \
+        fprintf(stderr, __VA_ARGS__);                                   \
         fprintf(stderr, "\n");                                          \
     } while(0)

@@ -40,6 +40,9 @@ int main(int argc, char* argv[]) {
     float temperature;
     int pressure;
 
+    // Create timer for time stamps
+    time_t timer;
+
     // Initialize signal handlers
     signal(SIGINT, SignalHandler);
     signal(SIGTERM, SignalHandler);
@@ -54,16 +57,16 @@ int main(int argc, char* argv[]) {
 
     // Initialize BMP180 for recording
     BMP180 station;
-    station.Begin(1);
+    station.Begin(3);
 
     // Constantly read and write to file
     while(!stop_signal_caught) {
         temperature = station.GetTemperature();
         pressure = station.GetPressure();
 
-        file_weather << temperature << " " << pressure << "\n";
+        file_weather << time(&timer) << " " << temperature << " " << pressure << "\n";
 
-        printf("Temperature: %.2f C | Pressure:    %d Pa\r", temperature, pressure);
+        printf("Temperature: %.2f C | Pressure:    %d Pa\n", temperature, pressure);
         delay(1000);
     }
     file_weather.close();
